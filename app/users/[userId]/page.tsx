@@ -2,6 +2,7 @@ import { getUser, getUserPosts } from "@/lib/requests"
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import UserPosts from "./components/UserPosts";
+import { notFound } from "next/navigation";
 
 type Params = {
     params: {
@@ -12,6 +13,7 @@ type Params = {
 // dynamic meta data
 export async function generateMetadata({params:{userId}}: Params): Promise<Metadata> {
     const user: User = await getUser(userId);
+    if (!user) return {};
     return {
         title: user.name,  // this appears as the title of the page
         description: `This is the page of ${user.email}`
@@ -40,6 +42,8 @@ export default async function UserPage({params:{userId}}: Params) {
     // const [user, posts] = await Promise.all([userData, postsData]);
 
     const user = await getUser(userId);
+
+    if (!user) notFound();   // default notFound page
 
     return (
         <> 
