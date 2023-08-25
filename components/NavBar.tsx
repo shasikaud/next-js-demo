@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Search from "./Search"
 
 export default function NavBar() {
   return (
@@ -6,6 +7,7 @@ export default function NavBar() {
         <h1 className="text-3xl font-bold text-white grid place-content-center mb-2 md:mb-0">
             <Link href='/'>Home</Link>
         </h1>
+        <Search/>
         <h1 className="text-3xl font-bold text-white grid place-content-center mb-2 md:mb-0">
             <Link href='/users'>Users</Link>
         </h1>
