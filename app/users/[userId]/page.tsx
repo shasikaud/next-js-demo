@@ -1,10 +1,20 @@
 import { getUser, getUserPosts } from "@/lib/requests"
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import UserPosts from "./components/UserPosts";
 
 type Params = {
     params: {
         userId: string
+    }
+}
+
+// dynamic meta data
+export async function generateMetadata({params:{userId}}: Params): Promise<Metadata> {
+    const user: User = await getUser(userId);
+    return {
+        title: user.name,  // this appears as the title of the page
+        description: `This is the page of ${user.email}`
     }
 }
 
@@ -21,7 +31,7 @@ type Params = {
 //             <h2>{user.name}</h2>
 //         </>
 //     )
-// }
+// } 
 
 export default async function UserPage({params:{userId}}: Params) {
 
@@ -32,7 +42,7 @@ export default async function UserPage({params:{userId}}: Params) {
     const user = await getUser(userId);
 
     return (
-        <>
+        <> 
             <h1>User Page</h1>
             <h2>{user.name}</h2>
             {/* load rest using suspense */}
